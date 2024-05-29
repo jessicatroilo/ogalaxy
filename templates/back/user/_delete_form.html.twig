@@ -1,4 +1,0 @@
-<form method="post" action="{{ path('app_admin_user_delete', {'id': userShow.id}) }}" onsubmit="return confirm('Voulez-vous supprimer cet utilisateur ?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ userShow.id) }}">
-    <button class="btn delete__btn" aria-label="Supprimer de la liste des utilisateurs">Supprimer</button>
-</form>

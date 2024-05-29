@@ -1,4 +1,0 @@
-<form method="post" action="{{ path('app_admin_expedition_delete', {'id': expeditionShow.id}) }}" onsubmit="return confirm('De vouloir supprimer cette expédition, êtes-vous bien certain ?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ expeditionShow.id) }}">
-    <button class="btn delete__btn" aria-label="Bouton pour supprimer une expédition">Supprimer</button>
-</form>

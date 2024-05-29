@@ -1,4 +1,0 @@
-<form method="post" action="{{ path('app_admin_review_delete', {'id': reviewShow.id}) }}" onsubmit="return confirm('Voulez-vous supprimer ce commentaire ?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reviewShow.id) }}">
-    <button class="btn delete__btn" aria-label="Bouton pour supprimer le commentaire choisi">Supprimer</button>
-</form>

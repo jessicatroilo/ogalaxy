@@ -1,4 +1,0 @@
-<form method="post" action="{{ path('app_admin_contact_delete', {'id': contactShow.id}) }}" onsubmit="return confirm('Voulez-vous supprimer ce message ?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contactShow.id) }}">
-    <button class="btn delete__btn" role="button" aria-label="Bouton pour supprimer le message choisi">Supprimer</button>
-</form>
