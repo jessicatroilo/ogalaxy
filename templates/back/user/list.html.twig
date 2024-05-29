@@ -1,0 +1,95 @@
+{% extends 'back/backoffice.html.twig' %}
+
+{% block title %}
+	Backoffice - Utilisateurs
+{% endblock %}
+
+{% block body %}
+<!-- Display the list of users-->
+<section id="list-users" aria-labelledby="list-user-complete">
+	<div class="container my-4">
+		<h3 class="display-4 ms-3 page__title"> Utilisateurs </h3>
+		<a class="btn add__items ms-3" href="{{ path('app_admin_user_create') }}" role="button" aria-label="Ajouter un utilisateur à la liste">
+			Ajouter un utilisateur
+		</a>
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success col-md-12 m-3" role="alert">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		<div class="row mt-3">
+			<div class="col-12 ms-3">
+				<div class="card table__text mb-3">
+					<div class="card-header table__bg">
+						<caption>Liste des utilisateurs</caption>
+					</div>
+					<div class="card-body">
+						<table role="presentation" class="table table-hover">
+							<thead class="text-center table__header">
+								<tr>
+									<th scope="col">
+										#
+									</th>
+									<th scope="col">
+										Pseudo
+									</th>
+									<th scope="col">
+										Prénom
+									</th>
+									<th scope="col">
+										Nom
+									</th>
+									<th scope="col">
+										Mail
+									</th>
+									<th scope="col">
+										Voir/Modifier/Supprimer
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for currentUser in userList %}
+									<tr class="text-center">
+										<th scope="row">
+											{{ currentUser.id }}
+										</th>
+										<td>
+											{{ currentUser.pseudo }}
+										</td>
+										<td>
+											{{ currentUser.firstname }}
+										</td>
+										<td>
+											{{ currentUser.lastname }}
+										</td>
+										<td>
+											{{ currentUser.email }}
+										</td>
+										<td>
+											<a href="{{ path('app_admin_user_show', {id: currentUser.id}) }}" class="btn btn-sm show__btn" role="button" aria-label="Bouton pour afficher l'utilisateur choisi">
+												<i class="bi bi-eye" aria-hidden="true"></i>
+											</a>
+											<a href="{{ path('app_admin_user_update', {id: currentUser.id}) }}" class="btn btn-sm update__btn" role="button" aria-label="Bouton pour modifier l'utilisateur choisi">
+												<i class="bi bi-pencil-square" aria-hidden="true"></i>
+											</a>
+											<div class="btn-group">
+												<form method="post" action="{{ path('app_admin_user_delete', {'id': currentUser.id}) }}" onsubmit="return confirm('Voulez-vous supprimer ce compte utilisateur ?');">
+													<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ currentUser.id) }}">
+													<button type="submit" class="btn btn-sm delete__btn" aria-label="Bouton pour supprimer l'utilisateur choisi">
+														<i class="bi bi-trash" aria-hidden="true"></i>
+													</button>
+												</form>
+											</div>
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}

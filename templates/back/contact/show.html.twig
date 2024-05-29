@@ -1,0 +1,49 @@
+{% extends 'back/backoffice.html.twig' %}
+
+{% block title %}Contact n° {{ contactShow.id }}{% endblock %}
+
+{% block body %}
+<!-- Show a contact message-->
+<section id="show-message" aria-labelledby="show-one-message">
+    <div class="container my-4 col-8">
+        <h3 class="page__title">Contact n° {{ contactShow.id }} de {{ contactShow.lastname }}</h3>
+        <a class="btn return__btn mt-3" href="{{ path('app_admin_contact_list') }}" role="button" aria-label="Retour à la liste des messages des utilisateurs" >Retour à la liste</a>
+
+        <table role="presentation" class="table mt-3">
+            <tbody>
+                <tr>
+                    <th scope="row">Id</th>
+                    <td>{{ contactShow.id }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Prénom</th>
+                    <td>{{ contactShow.firstname }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Nom</th>
+                    <td>{{ contactShow.lastname }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Mail</th>
+                    <td>{{ contactShow.email }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Sujet</th>
+                    <td>{{ contactShow.subject }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Message</th>
+                    <td>{{ contactShow.message }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Crée le</th>
+                    <td>{{ contactShow.createdAt ? contactShow.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex gap-3">
+            {{ include('back/contact/_delete_form.html.twig') }}
+        </div>
+    </div>
+</section>
+{% endblock %}

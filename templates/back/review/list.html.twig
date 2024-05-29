@@ -1,0 +1,94 @@
+{% extends 'back/backoffice.html.twig' %}
+
+{% block title %}
+	Backoffice - Reviews
+{% endblock %}
+
+{% block body %}
+<!-- Display the list of reviews-->
+<section id="list-review" aria-labelledby="list-review-complete">
+	<div class="container my-4">
+		<h3 class="display-4 ms-3 page__title"> Commentaires </h3>
+		{% for message in app.flashes('review success') %}
+			<div class="alert alert-success col-md-12 m-3" role="alert">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		<div class="row mt-3">
+			<!--Reviews-->
+			<div class="col-12 ms-3">
+				<div class="card table__text mb-3">
+					<div class="card-header table__bg">
+						<caption>Liste des commentaires</caption>
+					</div>
+					<div class="card-body">
+						<table class="table table-hover">
+							<thead class="text-center table__header">
+								<tr>
+									<th scope="col">
+										#
+									</th>
+                                    <th scope="col">
+                                        Planète
+                                    </th>
+									<th scope="col">
+										Utilisateur
+									</th>
+									<th scope="col">
+                                        Note
+                                    </th>
+									<th scope="col">
+                                        Commentaire
+                                    </th>
+									<th scope="col">
+										Voir/Supprimer
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for currentReview in reviewList %}
+									<tr class="text-center">
+										<th scope="row">
+											{{ currentReview.id}}
+										</th>
+                                        <td>
+											{{ currentReview.expedition.destination }}
+										</td>
+										<td>
+											{{ currentReview.user.pseudo }} - {{ currentReview.user.firstname }} {{ currentReview.user.lastname }}
+										</td>
+                                        <td>
+											{{ currentReview.rating }}
+										</td>
+                                        <td>
+											{{ currentReview.comment|slice(0, 30) }}
+                                            {% if currentReview.comment|length > 50 %}
+                                                ...
+                                            {% endif %}
+										</td>
+										<td>
+											<a href="{{ path('app_admin_review_show', {id: currentReview.id}) }}" class="btn btn-sm show__btn" role="button" aria-label="Bouton pour afficher le commentaire choisi">
+												<i class="bi bi-eye" aria-hidden="true"></i>
+											</a>
+
+											<div class="btn-group">
+												<form method="post" action="{{ path('app_admin_review_delete', {'id': currentReview.id}) }}" onsubmit="return confirm('Voulez-vous supprimer ce commentaire ?');">
+													<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ currentReview.id) }}">
+													<button type="submit" class="btn btn-sm delete__btn" aria-label="Bouton pour supprimer le commentaire choisi">
+														<i class="bi bi-trash" aria-hidden="true"></i>
+													</button>
+												</form>
+											</div>
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}

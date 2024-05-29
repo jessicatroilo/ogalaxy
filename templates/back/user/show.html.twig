@@ -1,0 +1,66 @@
+{% extends 'back/backoffice.html.twig' %}
+
+{% block title %} Profil de {{ userShow.pseudo }} {% endblock %}
+
+{% block body %}
+<!-- Display one user-->
+<section id="show-user" aria-labelledby="show-one-user">
+    <div class="container my-4 col-8">
+        <h3 class="page__title">Profil de {{ userShow.pseudo }} </h3>
+        <a class="btn return__btn mt-3" href="{{ path('app_admin_user_list') }}" role="button" aria-label="Retour à la liste des utilisateurs">Retour à la liste</a>
+
+        <table class="table mt-3" role="presentation">
+            <tbody>
+                <tr>
+                    <th scope="row">Id</th>
+                    <td>{{ userShow.id }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Pseudo</th>
+                    <td>{{ userShow.pseudo }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Prénom</th>
+                    <td>{{ userShow.firstname }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Nom</th>
+                    <td>{{ userShow.lastname }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Email</th>
+                    <td>{{ userShow.email }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Mot de passe</th>
+                    <td>{{ userShow.password }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Photo</th>
+                    <td>{{ userShow.picture }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Rôle</th>
+                    <td>{% if userShow.roles %}
+                            Administrateur
+                        {% else %}
+                            Utilisateur
+                        {% endif %}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Crée le</th>
+                    <td>{{ userShow.createdAt ? userShow.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Modifié le</th>
+                    <td>{{ userShow.updatedAt ? userShow.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex gap-3">
+            <a class="btn update__btn" href="{{ path('app_admin_user_update', {'id': userShow.id}) }}" role="button" aria-label="Bouton pour modifier l'utilisateur">Modifier</a>
+            {{ include('back/user/_delete_form.html.twig') }}
+        </div>
+    </div>
+</section>
+{% endblock %}

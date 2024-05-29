@@ -1,0 +1,46 @@
+{% extends 'back/backoffice.html.twig' %}
+
+{% block title %}Article n° {{ articleShow.id }}{% endblock %}
+
+{% block body %}
+<!-- Show a page for an article of blog-->
+<section id="show-article" aria-labelledby="show-one-article">
+    <div class="container my-4 col-8">
+        <h3 class="page__title">Article n° {{ articleShow.id }}</h3>
+        <a class="btn return__btn mt-3" href="{{ path('app_admin_article_list') }}" role="button" aria-label="Bouton retour à la liste des articles">Retour à la liste</a>
+
+        <table role="presentation"class="table mt-3">
+            <tbody>
+                <tr>
+                    <th scope="row">Id</th>
+                    <td>{{ articleShow.id }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Titre</th>
+                    <td>{{ articleShow.title }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Image</th>
+                    <td>{{ articleShow.picture }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Texte</th>
+                    <td>{{ articleShow.text }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Crée le</th>
+                    <td>{{ articleShow.createdAt ? articleShow.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Modifiée le</th>
+                    <td>{{ articleShow.updatedAt ? articleShow.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex gap-3">
+            <a class="btn update__btn" href="{{ path('app_admin_article_update', {'id': articleShow.id}) }}" role="button" aria-label="Bouton pour modifier un article choisi">Modifier</a>
+            {{ include('back/article/_delete_form.html.twig') }}
+        </div>
+    </div>
+</section>
+{% endblock %}

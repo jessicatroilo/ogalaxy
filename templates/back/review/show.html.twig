@@ -1,0 +1,53 @@
+{% extends 'back/backoffice.html.twig' %}
+
+{% block title %}Commentaire de {{ reviewShow.user.pseudo }}{% endblock %}
+
+{% block body %}
+<!-- Display one review-->
+<section id="show-review" aria-labelledby="show-one-review">
+    <div class="container my-4 col-8">
+        <h3 class="page__title">Commentaire de {{ reviewShow.user.firstname }} {{ reviewShow.user.lastname }} pour la planète {{ reviewShow.expedition.destination }}</h3>
+        <a class="btn return__btn mt-3" href="{{ path('app_admin_review_list') }}" role="button" aria-label="Bouton de retour à la liste des commentaires">Retour à la liste</a>
+
+        <table role="presentation" class="table mt-3">
+            <tbody>
+                <tr>
+                    <th scope="row">Id</th>
+                    <td>{{ reviewShow.id }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Planète</th>
+                    <td>{{ reviewShow.expedition.destination }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Pseudo</th>
+                    <td>{{ reviewShow.user.pseudo }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Prénom Nom</th>
+                    <td> {{ reviewShow.user.firstname }} {{ reviewShow.user.lastname }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Email</th>
+                    <td> {{ reviewShow.user.email }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Note</th>
+                    <td>{{ reviewShow.rating }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Commentaire</th>
+                    <td>{{ reviewShow.comment }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Crée le</th>
+                    <td>{{ reviewShow.createdAt ? reviewShow.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex gap-3">
+            {{ include('back/review/_delete_form.html.twig') }}
+        </div>
+    </div>
+</section>
+{% endblock %}

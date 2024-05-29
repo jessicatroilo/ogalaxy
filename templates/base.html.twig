@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{% block title %}O'Galaxy - Découvrez l'univers de Star Wars{% endblock %}</title>
+
+    {% block stylesheets %}
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
+
+    <!-- BOOTSTRAP -->
+        <!-- CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+        <!-- ICONS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+    {% endblock %} 
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=aldrich:400|bruno-ace-sc:400|megrim:400" rel="stylesheet" />
+
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="{{ asset('images/logo-galaxy.png') }}" type="image/x-icon" alt="Logo O'galaxy">
+    
+    <!-- CREDITS -->
+    <link  href="https://icons8.com/icon/5NjoP1iD5kon/fusée"><link href="https://icons8.com">
+    <link href="https://www.flaticon.com/fr/icones-gratuites/astronaute" title="astronaute icônes" alt="Astronaute icônes créées par Freepik - Flaticon">  
+
+    <!-- META -->
+    <meta name="description" content="Explorez notre univers spatial avec O'Galaxy! Découvrez nos expéditions vers les plus belles planètes de Star Wars, notre histoire, nos actualités et bien plus encore.">      
+</head>
+
+<body id="wrapper">
+    <!-- header, Nav -->
+    <header role="banner">
+        <nav class="navbar navbar-expand-xxl bg-body-tertiary nav__color " role="navigation">
+            <div class="container-fluid">
+                <a id="nav__title" class="navbar-brand" href="{{ path('app_home') }}">
+                    <img src="{{ asset('images/logo-galaxy.png') }}" alt="Logo" width="100" height="100" class="d-inline-block align-text-center">
+                    <h1 class="d-inline-block align-text-center">O'Galaxy</h1>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Menu burger : Affiche les sous-menus du Front Office">
+                    <span class="bi bi-list fs-1" width="100" height="100"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link ps-3 {% if app.current_route == 'app_front_expedition_list' %}active{% endif %}" href="{{ path ('app_front_expedition_list')}}" role="button" aria-label="Bouton pour afficher la page des expéditions">Nos expéditions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link ps-3 {% if app.current_route == 'app_front_about_us' %}active{% endif %}" href="{{ path('app_front_about_us') }}" role="button" aria-label="Bouton pour afficher la page de Notre Histoire">Notre Histoire</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link ps-3 {% if app.current_route == 'app_front_news_list' %}active{% endif %}" href="{{ path('app_front_news_list') }}" role="button" aria-label="Bouton pour afficher la page des actualités">Actualités</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link ps-3 {% if app.current_route == 'app_front_faq' %}active{% endif %}" href="{{ path('app_front_faq') }}" role="button" aria-label="Bouton pour afficher la page de la Foire aux questions">FAQ</a>
+                        </li>
+                    </ul>
+                    <div class="nav__icon align-items-center">
+                        {% include('front/search/_form.html.twig') %}
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a class="nav-item" href="{{path('app_front_favorite_list')}}">
+                            <img src="{{ asset('images/favoris-orange.png') }}" alt="Bouton d'accès aux favoris"
+                            width="60" height="60" class="d-inline-block align-text-center me-2 p-1"role="button" aria-label="Bouton pour accéder à ces expéditions favorites">
+                        </a>
+                        {% endif %}
+                    <div class="nav-item dropdown">
+                        <a class="nav-link" href="#" role="button" aria-label="Bouton de connexion et s'enregistrer" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if user is defined %}
+                            <img src="{% if user %}{{ user.picture ? asset('upload/profile_pictures/' ~ user.picture) : asset('images/icon-user-darkmode.png') }}{% else %}{{ asset('images/icon-user-darkmode.png') }}{% endif %}"  class="rounded-circle d-inline-block align-text-center me-3 p-1" alt="image de l'astronaute personnalisable en photo choisie par l'utilisateur" width="70" height="70">
+                            {% else %}
+                            <img src="{{ asset('images/icon-user-darkmode.png') }}"  class="rounded-circle d-inline-block align-text-center me-3 p-1" alt="image de l'astronaute personnalisable en photo choisie par l'utilisateur" width="70" height="70">
+                            {% endif %}
+                        </a>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <ul class="dropdown-menu dropdown-menu-end" id="nav__drop" role="button" aria-label="Bouton qui déroule le lien pour se connecter et/ou s'enregistrer">
+                                {% if is_granted('ROLE_ADMIN') %}
+                                <li>
+                                    <a class="dropdown-item" href="{{path('app_admin_main')}}" role="button" aria-label="Bouton d'accès au Back-office">Backoffice</a>
+                                </li>
+                                {% endif %}
+                                <li>
+                                    <a class="dropdown-item" href="{{path('app_front_profile_show')}}" role="button" aria-label="Bouton d'accès à son profil">Mon profil</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{path('app_logout')}}" role="button" aria-label="Bouton pour se déconnecter">Déconnexion</a>
+                                </li>
+                            </ul>
+                        {% else %}
+                            <ul class="dropdown-menu dropdown-menu-end" id="nav__drop" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_login') }}"role="button" aria-label="Bouton d'accès au formulaire de connexion et/ou s'enregistrer">Connexion/S'enregistrer</a>
+                                </li>
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Main -->
+<main>
+    {% block body %}{% endblock %}
+</main>
+
+<!-- Footer -->
+<footer class="footer__navbar mt-5" role="contentinfo">
+    <div class="container pt-4 pb-2 mt-5">
+        <div class="row d-flex justify-content-around">
+            <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+                <h5 class="text-uppercase font-weight-bold mb-2 footer__title">O'Galaxy</h5>
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2"><a class="footer__text" href="{{ path('app_front_contact') }}" role="button" aria-label="Bouton d'accès au formulaire de contact">Nous contacter</a>
+                    </li>
+                    <li class="mb-2"><a class="footer__text" href="{{ path('app_front_careers') }}" role="button" aria-label="Bouton d'accès aux carrières  ">Carrières</a>
+                    </li>
+                    <li class="mb-2"><a class="footer__text" href="{{ path('app_front_legal_notice') }}" role="button" aria-label="Bouton d'accès aux mentions légales">Mentions légales</a>
+                    </li>
+                    <li class="mb-2"><a class="footer__text" href="{{ path('app_front_confidentiality') }}" role="button" aria-label="Bouton d'accès aux régles de confidentialité">Confidentialité</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-1 mb-lg-0">
+                <h5 class="text-uppercase font-weight-bold mb-2 footer__title">May the Force be with you !</h5>
+                <p class="font-italic footer__paraph">Vivez une aventure hors du commun, vibrez au son du vaisseau
+                    et partez vers les étoiles !</p>
+                <ul class="list-inline mt-4 fs-1 d-flex justify-content-around">
+                    <li class="list-inline-item">
+                        <a class="footer__network" role="button" aria-label="Bouton d'accès à Twitter" href="https://twitter.com" target="_blank" title="Suivez-nous sur Twitter">
+                            <i class="bi bi-twitter"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="footer__network" role="button" aria-label="Bouton d'accès à Facebook" href="https://facebook.com" target="_blank" title="Suivez-nous sur Facebook">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="footer__network" role="button" aria-label="Bouton d'accès à Instagram" href="https://instagram.com" target="_blank" title="Suivez-nous sur Instagram">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="footer__network" role="button" aria-label="Bouton d'accès à YouTube" href="https://youtube.com" target="_blank" title="youtube">
+                            <i class="bi bi-youtube"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+<!-- Copyrights -->
+        <div class="footer__copyright text-center mt-3">
+            <p class="text-muted">© 2024 O'Galaxy All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+{% block javascripts %}
+<!-- JAVASCRIPT -->
+<script src="{{ asset('js/app.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/42477212ec.js" crossorigin="anonymous"></script>
+{% endblock %}
+</body>
+
+</html>

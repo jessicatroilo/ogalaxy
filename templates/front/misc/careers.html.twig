@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carrières{% endblock %}
+
+{% block body %}
+<!-- Display the careers -->
+<section id="careers" aria-labelledby="careers-missions" class="misc__wrapper">
+	<div class="container-fluid p-5">
+		<h2>Rejoignez notre Équipe</h2>
+		<p>Vous êtes passionné par l'espace, la science-fiction et les voyages interstellaires ? Vous souhaitez faire partie d'une équipe dynamique et innovante qui repousse les limites de l'exploration spatiale ? Alors ne cherchez plus, O'Galaxy est fait pour vous !</p>
+
+		<h3>Notre Mission</h3>
+		<p>Chez O'Galaxy, nous croyons que l'exploration spatiale est l'avenir de l'humanité. Notre mission est de rendre les voyages intergalactiques accessibles à tous, en offrant des expériences uniques et inoubliables dans l'univers de Star Wars. Nous sommes déterminés à repousser les frontières de l'imaginable et à créer un avenir où chacun peut explorer les confins de la galaxie.</p>
+
+		<a href="{{ path('app_front_our_album') }}" style="text-decoration: none;" role="bouton" aria-label="Bouton pour écouter la musique de Galactic Adventure"><h3>Pourquoi Nous Rejoindre ?</h3></a>
+		<p>En rejoignant l'équipe d'O'Galaxy, vous aurez l'opportunité de travailler sur des projets passionnants et innovants, de collaborer avec des experts de l'industrie spatiale et de contribuer à façonner l'avenir des voyages interstellaires. Nous valorisons la créativité, la collaboration et l'excellence, et nous sommes toujours à la recherche de nouveaux talents pour rejoindre notre équipe.</p>
+
+		<h3>Postes Disponibles</h3>
+		<p>Développeur Web<br>
+			Designer Graphique<br>
+			Spécialiste en Marketing Digital<br>
+			Guide Interstellaire<br>
+			Expert en Relations Publiques<br>
+			Analyste de Données Spatiales<br>
+			Ingénieur en Propulsion Stellaires<br>
+			Spécialiste en Communication Intergalactique<br></p>
+
+		<h3>Comment Postuler</h3>
+		<p>Pour postuler à l'un de nos postes disponibles, veuillez envoyer votre CV ainsi qu'une lettre de motivation à l'adresse e-mail suivante :
+			<a href="mailto:recrutement@ogalaxy.com" role="link" aria-label="Lien pour envoyer un e-mail à recrutement@ogalaxy.com">recrutement@ogalaxy.com</a>. Veuillez indiquer le poste pour lequel vous postulez dans l'objet de votre e-mail. Nous sommes impatients de découvrir votre talent et de vous accueillir dans notre équipe.</p>
+
+		<p>Rejoignez-nous dès aujourd'hui et aidez-nous à réaliser le rêve de l'exploration spatiale pour tous !</p>
+	</div>
+</section>
+{% endblock %}

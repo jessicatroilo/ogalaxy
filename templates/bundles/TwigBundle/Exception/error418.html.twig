@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Une tasse de thé, tu veux ? {% endblock %}
+
+{% block body %}
+<section>
+    <div class="container__error d-flex flex-column align-items-center justify-content-center">
+        <div class="header__page__error d-flex align-items-center flex-column justify-content-center">
+            <h2 class="h1__error">418</h2>
+            <h3 class="h3__error"> BREAK | Une tasse de thé, tu veux ? </h3>
+        </div>
+            <img class="img__error rounded-circle m-3" src="{{ asset('images/error418.webp') }}" alt="404 page not found">
+        <div class="footer__page__error ">
+            <p class="p__error"> Installes-toi, respire et bois une boisson chaude avec moi !</p>
+            <a href="{{ path('app_home') }}" class=" btn list__btn"> Retour sur Terre </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

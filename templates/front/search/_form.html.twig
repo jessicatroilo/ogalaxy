@@ -1,0 +1,13 @@
+<!-- This template is used to display the search nav   -->
+
+{% if searchForm is defined %}
+
+{{ form_start(searchForm, {'action': path('app_front_search'),'attr': {'class': 'navbar-form'}}) }}
+    <div class="input-group">
+        {{ form_widget(searchForm.query) }}
+            <button id="nav__btn" class="btn" type="submit"><i class="fa-solid fa-magnifying-glass fs-2" alt="loupe de recherche" aria-label="Bouton pour effectuer une recherche"></i>
+            </button>                            
+    </div>
+{{ form_end(searchForm) }}
+{% else %}
+{% endif %}

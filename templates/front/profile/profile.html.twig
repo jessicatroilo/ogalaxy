@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+<!-- Display the profil -->
+<section id="display-profile" aria-labelledby="profile">
+    {% for message in app.flashes('profile success') %}
+        <div class="alert alert-success d-flex align-items-center justify-content-center m-3" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('register success') %}
+        <div class="alert alert-success d-flex align-items-center justify-content-center m-3" role="alert">
+            {{ message }}
+        </div>
+
+    {% endfor %}
+    <div class="container d-flex justify-content-center align-items-lg-start align-items-center flex-column flex-lg-row">
+        <img src="{{ user.picture ? asset('upload/profile_pictures/' ~ user.picture) : asset('images/icon-user-darkmode.png') }}"  alt="image de l'astronaute personnalisable en photo choisie par l'utilisateur" width="250" height="250" class="rounded-circle d-inline-block align-text-center me-3 p-1">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="profile__color d-flex flex-column">
+                <p class="mb-2">{{ user.firstname }} {{ user.lastname }}</p>
+                <p class="mb-2">{{ user.email }}</p>
+                <button class="btn modify__btn" data-bs-toggle="modal" data-bs-target="#profileModal" aria-label="Bouton pour modifier son profil">Modifier</button>
+            </div>
+            <!-- Modal -->
+                {% block subbody %}
+                {{ include('front/profile/modal.html.twig')}}
+                {% endblock %}
+        <!-- End Modal -->
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <!-- Wait Booking -->
+    <section id="wait-booking" aria-labelledby="wait-title">
+        <div class="text-start">
+            <h3 class="booking__bigtitle mb-3">Mes réservations en attente</h3>
+            <!-- filter by status wait for it -->
+        </div>
+        <div class="d-flex">
+            {% for waitBooking in waitingBookings %}
+            <div class="d-flex flex-column align-items-center">
+                <div class="booking__pictures">
+                    <img src="{{ waitBooking.expedition.picture }}" alt="Description de l'image" class="me-2 mb-2 rounded d-inline-block align-text-center me-3 p-1"
+                        style="max-width: 250px;">
+                </div>
+                <h5 class="card-title booking__title mb-3"> {{ waitBooking.expedition.destination }}</h5>
+
+                <a href="{{ path ('app_front_expedition_show', {id:waitBooking.expedition.id}) }}"
+                    class="btn profile__btn" role="button" aria-label="Bouton pour afficher l'expédition choisie">Détails de l'expédition</a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Validate Booking -->
+    <section id="validate-booking" aria-labelledby="validate-title">
+        <div class="text-start">
+            <h3 class="booking__bigtitle mb-3">Mes réservations confirmées</h3>
+            <!-- filter by status wait for it -->
+        </div>
+        <div class="d-flex">
+            {% for validateBooking in validateBookings %}
+            <div class="d-flex flex-column align-items-center">
+                <div class="booking__pictures">
+                    <img src="{{ validateBooking.expedition.picture }}" alt="Description de l'image" class="me-2 mb-2 rounded d-inline-block align-text-center me-3 p-1"
+                        style="max-width: 250px;">
+                </div>
+                <h5 class="card-title booking__title mb-3"> {{ validateBooking.expedition.destination }}</h5>
+
+                <a href="{{ path ('app_front_expedition_show', {id:validateBooking.expedition.id}) }}"
+                    class="btn profile__btn" role="button" aria-label="Bouton pour afficher l'expédition choisie">Détails de l'expédition</a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Canceled Booking -->
+    <section id="canceled-booking" aria-labelledby="canceled-title">
+        <div class="text-start">
+            <h3 class="booking__bigtitle mb-3">Mes réservations annulées</h3>
+            <!-- filter by status wait for it -->
+        </div>
+        <div class="d-flex">
+            {% for canceledBooking in canceledBookings %}
+            <div class="d-flex flex-column align-items-center">
+                <div class="booking__pictures">
+                    <img src="{{ canceledBooking.expedition.picture }}" alt="Description de l'image" class="me-2 mb-2 rounded d-inline-block align-text-center me-3 p-1"
+                        style="max-width: 250px;">
+                </div>
+                <h5 class="card-title booking__title mb-3"> {{ canceledBooking.expedition.destination }}</h5>
+
+                <a href="{{ path ('app_front_expedition_show', {id:canceledBooking.expedition.id}) }}"
+                    class="btn profile__btn" role="button" aria-label="Bouton pour afficher l'expédition choisie">Détails de l'expédition</a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

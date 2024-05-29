@@ -1,0 +1,5 @@
+<!-- This template is used to display the form to create or edit an article -->
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn save__btn" aria-label="Bouton pour enregistrer un article">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}
