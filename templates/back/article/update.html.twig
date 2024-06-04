@@ -1,0 +1,18 @@
+{% extends 'back/backoffice.html.twig' %}
+
+
+{% block title %}Mettre à jour un article{% endblock %}
+
+{% block body %}
+<!-- Updated a page for an article of blog-->
+<section id="update-article" aria-labelledby="update-one-article">
+	<div class="container col-9 my-4">
+			<h3 class="display-4 page__title">
+				Mettre à jour un article
+			</h3>
+	<a class="btn return__btn mb-3" href="{{ path('app_admin_booking_list') }}" role="button" aria-label="Bouton retour à la liste des articles">Retour à la liste</a>
+
+	{{ include('back/article/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+	</div>
+</section>
+{% endblock %}

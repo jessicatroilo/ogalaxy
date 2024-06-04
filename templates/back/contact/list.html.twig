@@ -1,0 +1,94 @@
+{% extends 'back/backoffice.html.twig' %}
+
+{% block title %}
+	Backoffice - Contacts
+{% endblock %}
+
+{% block body %}
+<!-- Display a list of users messages-->
+<section id="list-messages" aria-labelledby="list-messages-complete">
+	<div class="container my-4">
+		<h3 class="display-4 ms-3 page__title"> Contacts </h3>
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success col-md-12 m-3">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		<div class="row mt-3">
+			<!--CONTACT-->
+			<div class="col-12 ms-3">
+				<div class="card table__text mb-3">
+					<div class="card-header table__bg">
+						<caption>Liste des contacts</caption>
+					</div>
+					<div class="card-body">
+						<table role="presentation" class="table table-hover">
+							<thead class="text-center table__header">
+								<tr>
+									<th scope="col">
+										#
+									</th>
+									<th scope="col">
+										Prénom Nom
+									</th>
+									<th scope="col">
+                                        Email
+                                    </th>
+									<th scope="col">
+                                        Sujet
+                                    </th>
+                                    <th scope="col">
+										Message
+									</th>
+									<th scope="col">
+										Voir/Supprimer
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for currentContact in contactList %}
+									<tr class="text-center">
+										<th scope="row">
+											{{ currentContact.id}}
+										</th>
+										<td>
+											{{ currentContact.firstname }} {{ currentContact.lastname }}
+										</td>
+                                        <td>
+											{{ currentContact.email }}
+										</td>
+                                    	<td>
+											{{ currentContact.subject }}
+										</td>
+                                        <td>
+                                            {{ currentContact.message|slice(0, 30) }}
+                                            {% if currentContact.message|length > 50 %}
+                                                ...
+                                            {% endif %}
+                                        </td>
+										<td>
+											<a href="{{ path('app_admin_contact_show', {id: currentContact.id}) }}" class="btn btn-sm show__btn" role="button" aria-label="Bouton pour afficher le message choisi">
+												<i class="bi bi-eye" aria-hidden="true"></i>
+											</a>
+											
+											<div class="btn-group">
+												<form method="post" action="{{ path('app_admin_contact_delete', {'id': currentContact.id}) }}" onsubmit="return confirm('Voulez-vous supprimer ce message ?');">
+													<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ currentContact.id) }}">
+													<button type="submit" class="btn btn-sm delete__btn" aria-label="Bouton pour supprimer le message choisi">
+														<i class="bi bi-trash" aria-hidden="true"></i>
+													</button>
+												</form>
+											</div>
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}

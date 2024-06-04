@@ -1,0 +1,19 @@
+{% block subbody %}
+<!-- Display the form to update the profile -->
+<section id="update-profil" aria-labelledby="profileModal">
+<div class="modal fade" id="profileModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-sm-down modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header modal__header__bg">
+                <h3 class="modal-title modal__font fs-5" id="profileModalLabel">Modifier mes informations</h3>
+                <button class="bi bi-x btn__close" data-bs-dismiss="modal" aria-label="Bouton pour fermer le formulaire"></button>
+            </div>
+            <div class="modal-body modal__body__bg">
+                <!-- Modify Profile form -->
+                    {{ include('front/profile/_form.html.twig', {'form': form}) }}
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+{% endblock %}

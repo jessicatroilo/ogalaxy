@@ -1,0 +1,99 @@
+{% extends 'back/backoffice.html.twig' %}
+
+{% block title %}
+	Backoffice - Réservations
+{% endblock %}
+
+{% block body %}
+<!--Display list of all bookings-->
+<section id="list-booking" aria-labelledby="list-one-booking">
+	<div class="container my-4">
+		<h3 class="display-4 ms-3 page__title"> Réservations </h3>
+		<a class="btn add__items ms-3" href="{{ path('app_admin_booking_create') }}" role="button" aria-label="Bouton pour ajouter une réservation">
+			Ajouter une réservation
+		</a>
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success col-md-12 m-3" role="alert">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		<div class="row mt-3">
+			<!--BOOKING-->
+			<div class="col-12 ms-3">
+				<div class="card table__text mb-3">
+					<div class="card-header table__bg">
+						<caption>Liste des réservations</caption>
+					</div>
+					<div class="card-body">
+						<table role="presentation" class="table table-hover">
+							<thead class="text-center table__header">
+								<tr>
+									<th scope="col">
+										#
+									</th>
+									<th scope="col">
+										Prénom Nom
+									</th>
+									<th scope="col">
+                                        Destination
+                                    </th>
+									<th scope="col">
+                                        Statut
+                                    </th>
+									<th scope="col">
+										Voir/Modifier/Supprimer
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for currentBooking in bookingList %}
+									<tr class="text-center">
+										<th scope="row">
+											{{ currentBooking.id }}
+										</th>
+										<td>
+											{{ currentBooking.user.firstname }} {{ currentBooking.user.lastname }}
+										</td>
+                                        <td>
+											{{ currentBooking.expedition.title }}
+										</td>
+                                        <td>
+											{% if currentBooking.bookingstatus == 1 %}
+												En attente
+											{% elseif currentBooking.bookingstatus == 2 %}
+												Validée
+											{% elseif currentBooking.bookingstatus == 3 %}
+												Annulée
+											{% else %}
+												Reportée
+											{% endif %}
+										</td>
+										<td>
+											<a href="{{ path('app_admin_booking_show', {id: currentBooking.id}) }}" class="btn btn-sm show__btn" role="button" aria-label="Bouton pour afficher la réservation">
+												<i class="bi bi-eye" aria-hidden="true"></i>
+											</a>
+											<a href="{{ path('app_admin_booking_update', {id: currentBooking.id}) }}" class="btn btn-sm update__btn" role="button" aria-label="Bouton pour modifier la réservation">
+												<i class="bi bi-pencil-square" aria-hidden="true"></i>
+											</a>
+											
+											<div class="btn-group">
+												<form method="post" action="{{ path('app_admin_booking_delete', {'id': currentBooking.id}) }}" onsubmit="return confirm('Voulez-vous supprimer cette réservation ?');">
+													<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ currentBooking.id) }}">
+													<button type="submit" class="btn btn-sm delete__btn" aria-label="Bouton pour supprimer la réservation">
+														<i class="bi bi-trash" aria-hidden="true"></i>
+													</button>
+												</form>
+											</div>
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}

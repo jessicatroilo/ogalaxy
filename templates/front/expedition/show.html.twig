@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Expédition sur {{ expedition.title }} {% endblock %}
+
+{% block body %}
+<!-- Display the details of an expedition-->
+<section id="show-expedition-{{ expedition.title }}" aria-labelledby="show-expedition">
+
+    <!-- Flash Message -->
+    {% for message in app.flashes('success') %}
+			<div class="alert alert-success d-flex align-items-center justify-content-center m-3" role="alert">
+				{{ message }}
+			</div>
+	{% endfor %}
+    {% for message in app.flashes('favorite success') %}
+			<div class="alert alert-success d-flex align-items-center justify-content-center m-3" role="alert">
+				{{ message }}
+			</div>
+	{% endfor %}
+    {% for message in app.flashes('favorite warning') %}
+			<div class="alert alert-danger d-flex align-items-center justify-content-center m-3" role="alert">
+				{{ message }}
+			</div>
+	{% endfor %}
+    <!-- End Flash Message -->
+    
+    <div class="d-flex justify-content-end m-3 mb-0">
+        <a href="{{ path ('app_front_expedition_list') }}" class="btn show__btn__back" role="button" aria-label="Bouton de retour à la liste des expéditions"> <i class="bi bi-arrow-left-circle"></i> Retour </a>
+    </div>
+    <div id="show__header" class="d-flex flex-column align-items-center justify-content-center m-1 mt-0">
+        <h2 id="show__bigtitle"> Expédition </h2>
+        <h3 id="show__smalltitle"> {{ expedition.destination }} </h3>
+    </div>
+    <div id="show__body" class="d-flex justify-content-sm-center justify-content-xl-start m-4">
+        <div id="show__border" class="card d-flex align-items-sm-center flex-xl-row align-items-xl-strech" style="max-width: 100vw;">
+            <img id="show__image__size"src="{{ expedition.picture }}" class="img-fluid-top rounded-circle" alt="Paysage de {{ expedition.title }}">
+            <div class="card-body">
+                <h4 class="card-title d-flex gap-4 align-items-center show__size__title">Résumé de l'expédition 
+                {% include('front/partials/_favorite_button.html.twig') %}
+                </h4>
+                <p class="card-text show__size__desc">{{ expedition.description }}</p>
+                <p class="card-text show__size__text"><span class="show__color__span">Nombre de places disponibles :</span> {{ expedition.passenger }} maximum </p>
+                <p class="card-text show__size__text"><span class="show__color__span">Date de départ : </span> {{ expedition.departure | date ('d/m/Y') }}</p>
+                <p class="card-text show__size__text"><span class="show__color__span">Durée du séjour : </span> {{ expedition.duration }} semaines</p>
+                <p class="card-text show__size__text"><span class="show__color__span">Prix : </span>{{ expedition.price|format_currency('EUR', locale='fr') }}</p>
+
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <div class="m-1 mt-3 d-flex justify-content-end">
+                    <button class="btn show__booking__btn" data-bs-toggle="modal" data-bs-target="#bookingModal" aria-label="Bouton d'accès au formulaire de réservation">Formulaire de réservation</button>
+                </div>
+                {% else %}
+                <div class="m-1 mt-3 d-flex justify-content-end">
+                    <a class="btn show__login__btn" href="{{ path ('app_login') }} " role="button" aria-label="Bouton d'accès au formulaire de réservation">Pour réserver, merci de vous connecter</a>
+                </div>
+                {% endif %}
+                <!-- Modal -->
+                {% block subbody %}
+                {{ include('front/booking/modal.html.twig')}}
+                {% endblock %}
+                <!-- End Modal -->
+            </div>
+        </div>
+    </div>
+    <div id="show__comment" class="card m-5">
+        {% if is_granted("ROLE_USER") %}
+            <a class="btn show__login__btn mb-2 col-xl-3 col-sm-12" href="{{path('app_front_review_add',{id:expedition.id})}}" role="button" aria-label="Bouton pour créer un commentaire">Créer un commentaire</a>
+        {% endif %}
+
+        {% if expedition.reviews is not empty %}
+            <h5 class="show__title__comment card-title m-3 mb-2 ">Commentaires</h5> 
+        {% else %}
+            <h5 class="show__title__comment card-title m-2 mb-2 ">Pas encore de commentaires. Venez partager votre expérience !</h5>
+        {% endif %}
+        {% for review in expedition.reviews %}
+        <div class="card m-1">
+            <div class="card-header fw-bold text-align-center">
+                <p class="card-text">{{review.user.pseudo}}</p>
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <div>
+                        {% include "front/partials/_stars_review.html.twig" with {rating : review.rating} %}
+                    </div>
+
+                    <p class="card-text">{{ review.comment }}</p>
+                    {% if review.picture %}
+                        <img src="{{ asset('upload/profile_pictures/' ~ review.picture) }}" alt="" width="150" height="150" class="rounded mb-3 d-inline-block align-text-center me-3 p-1">
+                    {% else %}
+                    {% endif %}
+                <footer class="blockquote-footer">{{ review.createdAt|date('d/m/Y') }}</footer>
+                </blockquote>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

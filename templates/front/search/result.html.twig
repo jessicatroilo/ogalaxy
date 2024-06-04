@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche{% endblock %}
+
+{% block body %}
+<!-- Display the result of the searchbar -->
+<section id="search-result" aria-labelledby="result" class="d-flex justify-content-center">
+    <div class="container m-4 d-flex flex-column">
+        <h2 class="text-center home__bigtitle">Résultats de la recherche</h2>
+        {% if expeditions|length > 0 or news|length > 0 %}
+            {% if news %}
+                <h3 class="text-center search__title mt-2">Articles :</h3>
+                <div class="d-flex mt-1 flex-row flex-wrap justify-content-center">
+                    {% for new in news %}
+                            <div id="home__next__border" class="card m-3" style="width: 12rem;">
+                                <img src="{{ new.picture }}" class="card-img-top rounded-pill w-100" alt="Illustration de l'article">
+                                <div class="card-body d-flex align-items-center flex-column home__card__bg">
+                                    <h4 class="card-title text-center search__title mb-3">
+                                        {{ new.title|slice(0, 25)}}
+                                        {% if new.title|length > 25 %}
+                                            ...
+                                        {% endif %}
+                                    </h4>
+                                    <div>
+                                        <a href="{{ path ('app_front_news_show', {id: new.id}) }}" class="btn list__btn me-1" role="button" aria-label="Bouton pour voir le résultat">
+                                        Voir
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <h3 class="text-center search__title m-3">Articles : <span class="search__text" >aucun résultat pour votre recherche</span></h3>
+            {% endif %}
+            {% if expeditions %}
+                <h3 class="text-center search__title mt-2">Destinations :</h3>
+                <div class="d-flex flex-row flex-wrap justify-content-center">
+                    {% for expedition in expeditions %}
+                            <div id="home__next__border" class="card m-3" style="width: 10rem;">
+                                <img src="{{ expedition.picture }}" class="card-img-top rounded-pill w-100" alt="Paysage de {{ expedition.title}}">
+                                <div class="card-body d-flex align-items-center flex-column home__card__bg">
+                                    <h4 class="card-title search__title mb-3">
+                                        {{ expedition.title}}
+                                    </h4>
+                                    <div>
+                                        <a href="{{ path ('app_front_expedition_show', {id: expedition.id}) }}" class="btn list__btn me-1" role="button" aria-label="Bouton pour voir le résultat">
+                                            Voir
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <h3 class="text-center search__title m-3">Destinations : <span class="search__text" >aucun résultat pour votre recherche</span></h3>
+            {% endif %}
+        {% else %}
+            <img src="{{ asset('images/yoda-search.jpeg') }}" class="rounded-circle search__img" alt="Illustration de Yoda">
+            <p class="text-center search__title m-3" >Aucun résultat pour votre recherche, la recommencer tu-dois !</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

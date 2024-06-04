@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actualités{% endblock %}
+
+{% block body %}
+<!-- Display the news list -->
+<section id="news-list" aria-labelledby="news-list-complete" class="misc__wrapper">
+    <div class="container mt-5">
+        {% for article in articleList %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    {{ article.title }}
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-1">
+                        <div class="text ellipsis">
+                            <p class="card-text text-concat">{{ article.text }}</p>
+                        </div>
+                        <footer class="blockquote-footer"><cite title="Date de parution">{{ article.createdAt|date('d / m / Y') }}</cite></footer>
+                        <a href="{{ path('app_front_news_show', {'id': article.id}) }}" class="btn button" role="button" aria-label="Bouton pour afficher une actualité choisie">Lire la suite</a>
+                    </blockquote>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

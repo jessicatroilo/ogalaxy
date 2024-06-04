@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Accès non autorisé {% endblock %}
+
+{% block body %}
+<section>
+    <div class="container__error d-flex flex-column align-items-center justify-content-center">
+        <div class="header__page__error d-flex align-items-center flex-column justify-content-center">
+            <h2 class="h1__error">403</h2>
+            <h3 class="h3__error"> HALTE | Accès non autorisé </h3>
+        </div>
+            <img class="img__error rounded-circle m-3" src="{{ asset('images/error403.webp') }}" alt="404 page not found">
+        <div class="footer__page__error ">
+            <p class="p__error__403 text-center">Vous n'avez pas le pouvoir suprême pour accèder à cette page !</p> 
+            <p class="p__error__403 text-center">Retourner t'entraîner tu dois, jeune Padawan !</p>
+            <a href="{{ path('app_home') }}" class=" btn list__btn"> Retour sur Terre </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

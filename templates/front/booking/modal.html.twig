@@ -1,0 +1,22 @@
+{% block subbody %}
+<!-- Display the booking form -->
+<section id="booking-form" aria-labelledby="modal fade">
+    <div class="modal fade" id="bookingModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="bookingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-sm-down modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header modal__header__bg">
+                    <h3 class="modal-title modal__font fs-5" id="bookingModalLabel">Formulaire de réservation</h3>
+                    <button class="bi bi-x btn__close" data-bs-dismiss="modal" aria-label="Bouton pour fermer le formulaire"</button>
+                </div>
+                <div class="modal-body modal__body__bg">
+                    Votre voyage sur {{expedition.destination}} pour le {{ expedition.departure |date('d/m/Y') }}
+                    
+                    <!-- Booking form -->
+
+                        {{ include('front/booking/_form.html.twig', {'form': form}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
