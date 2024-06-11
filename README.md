@@ -37,7 +37,11 @@ Mais surtout de créer des souvenirs inoubliables en explorant des mondes lointa
 
 ## Captures d'écran
 
-![Accueil](screenshots/home.png)
+![Nos expéditions - version desktop](https://github.com/jessicatroilo/ogalaxy/assets/148094229/70d41914-bbfe-4eda-8606-eb619d6f9704)
+
+![Nos expéditions - version mobile](https://github.com/jessicatroilo/ogalaxy/assets/148094229/be30e6f6-9927-48f4-bc51-dfa0f2d127e1)
+
+![Backoffice](https://github.com/jessicatroilo/ogalaxy/assets/148094229/261c670b-9af8-4787-a7c5-67042ee0b01c)
 
 ## Technologies Utilisées
 
